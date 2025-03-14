@@ -2,6 +2,14 @@ require 'sinatra'
 require 'telegram/bot'
 require 'yaml'
 require 'json'
+require 'logger'
+
+# Vytvoření adresáře pro logy, pokud neexistuje
+log_dir = File.join(File.dirname(__FILE__), 'logs')
+Dir.mkdir(log_dir) unless Dir.exist?(log_dir)
+
+# Inicializace loggeru
+logger = Logger.new(File.join(log_dir, 'application.log'))
 
 # Načtení konfigurace
 CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), 'config', 'settings.yml'))
@@ -26,8 +34,9 @@ def send_telegram_message(message)
     chat_ids.each do |chat_id|
       begin
         bot.api.send_message(chat_id: chat_id, text: message)
+        logger.info("Zpráva úspěšně odeslána do chatu #{chat_id}")
       rescue => e
-        puts "Chyba při odesílání zprávy do chatu #{chat_id}: #{e.message}"
+        logger.error("Chyba při odesílání zprávy do chatu #{chat_id}: #{e.message}")
       end
     end
   end
