@@ -3,6 +3,7 @@ config/settings.yml
 # Ignorovat složky závislostí (pokud používáš Composer)
 vendor/
 config/
+logs/
 # Ignorovat logy a dočasné soubory
 *.log
 *.cache
