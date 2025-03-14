@@ -1,0 +1,29 @@
+# Ignorovat konfigurační soubor s přístupy k DB
+config/db.php
+# Ignorovat složky závislostí (pokud používáš Composer)
+vendor/
+config/
+# Ignorovat logy a dočasné soubory
+*.log
+*.cache
+tmp/
+cache/
+
+# Ignorovat soubory IDE (VSCode, PHPStorm, NetBeans…)
+.vscode/
+.idea/
+nbproject/
+
+# Ignorovat nahrané soubory, pokud nějaké ukládáš lokálně
+uploads/
+
+# Ignorovat soubory záloh
+*.bak
+*.sql
+*.tar
+*.zip
+*.gz
+
+# Ignorovat systémové soubory (MacOS, Windows)
+.DS_Store
+Thumbs.db
