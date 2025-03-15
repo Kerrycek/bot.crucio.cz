@@ -18,6 +18,7 @@ Zde je jednoduchý návod krok za krokem, jak zprovoznit váš Telegram bot:
 ## 3. Nastavení konfiguračního souboru
 
 Upravte soubor `config/settings.yml`:
+```
 telegram:
   bot_token: "VÁŠ_TELEGRAM_BOT_TOKEN"
   chat_ids:
@@ -29,8 +30,10 @@ users:
     password: "bezpečné_heslo_1"
   - username: "user2"
     password: "bezpečné_heslo_2"  # Volitelné
+```
 
 ## 4. Instalace závislostí: 
+```
 cd /var/www/crucio.cz/bot
 bundle install
 
@@ -53,15 +56,17 @@ WantedBy=multi-user.target
 
 systemctl enable telegram-bot
 systemctl start telegram-bot
-
+```
 
 ## 5. configy apache
+```
 <VirtualHost *:80>
     ServerName bot.crucio.cz
     Redirect permanent / https://bot.crucio.cz/
 </VirtualHost>
+```
 
-
+```
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
     ServerName bot.crucio.cz
@@ -78,31 +83,37 @@ systemctl start telegram-bot
     SSLCertificateKeyFile /etc/letsencrypt/live/bot.crucio.cz/privkey.pem
 </VirtualHost>
 </IfModule>
-
-
+```
+```
 a2enmod proxy proxy_http ssl rewrite
 a2ensite bot.crucio.cz.conf bot.crucio.cz-le-ssl.conf
 systemctl restart apache2
 
-
+```
 
 # Test zdraví služby
+```
 curl -X GET http://localhost:4567/health
+```
 
 # Test odeslání zprávy
+```
 curl -X POST http://localhost:4567/send_message \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"bezpečné_heslo_1","message":"Testovací zpráva"}'
+```
 
-
+```
 # Test zdraví služby
 curl -X GET https://bot.crucio.cz/health
+```
 
+```
 # Test odeslání zprávy
 curl -X POST https://bot.crucio.cz/send_message \
   -H "Content-Type: application/json" \
   -d '{"username":"admin","password":"bezpečné_heslo_1","message":"Testovací zpráva přes doménu"}'
-
+```
 
 
 
